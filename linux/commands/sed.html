@@ -1,0 +1,236 @@
+<h1 id="sed">Sed</h1>
+<p>Sed全名stream editor，意为流编辑器，用来对文件进行过滤和替换操作，但一次只处理一行内容</p>
+<ul>
+<li><a href="#command-line">Command Line</a><ul>
+<li><a href="#使用多重指令的三种方式">使用多重指令的三种方式</a></li>
+<li><a href="#使用脚本文件--f">使用脚本文件 -f</a></li>
+<li><a href="#阻止自动输出--n">阻止自动输出 -n</a></li>
+<li><a href="#提前备份文件--i">提前备份文件 -i</a></li>
+</ul>
+</li>
+<li><a href="#语法">语法</a><ul>
+<li><a href="#范围控制">范围控制</a></li>
+<li><a href="#范围嵌套">范围嵌套</a></li>
+</ul>
+</li>
+<li><a href="#操作">操作</a><ul>
+<li><a href="#替换">替换</a></li>
+<li><a href="#追加插入和替换">追加、插入和替换</a></li>
+<li><a href="#转换操作">转换操作</a></li>
+<li><a href="#打印操作">打印操作</a></li>
+<li><a href="#打印行号">打印行号</a></li>
+<li><a href="#下一步next">下一步next</a></li>
+<li><a href="#追加下一行next">追加下一行NEXT</a></li>
+<li><a href="#多行删除">多行删除</a></li>
+<li><a href="#多行打印">多行打印</a></li>
+<li><a href="#读写文件">读写文件</a></li>
+<li><a href="#退出">退出</a></li>
+<li><a href="#保持空间">保持空间</a></li>
+<li><a href="#分支">分支</a></li>
+<li><a href="#测试">测试</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="command-line">Command Line</h2>
+<h3 id="-">使用多重指令的三种方式</h3>
+<pre><code>- sed &#39;s/regular/complex/; s/regular/complex&#39; file
+- sed -e &#39;instruction&#39; -e &#39;instruction&#39; -e &#39;instruction&#39; file
+- sed &#39;
+    \&gt; s/regualr/complex/
+    \&gt; instruction
+    \&gt; instruction&#39; file
+</code></pre><h3 id="-f">使用脚本文件 -f</h3>
+<pre><code>- sed -f scriptfile inputfile
+</code></pre><h3 id="-n">阻止自动输出 -n</h3>
+<pre><code>- sed -n -e &#39;s/regular/complex/p&#39; file
+- * 能够使用p让它输出，同样的办法也可以在脚本中用#n
+</code></pre><h3 id="-i">提前备份文件 -i</h3>
+<p>给文件加上SUFFIX后缀进行备份，然后在原文件上修改</p>
+<h2 id="-">语法</h2>
+<h3 id="-">范围控制</h3>
+<p>sed使用的是范围+操作的格式，类似<code>/pattern1/s/pattern2/replacement/g</code>，表示在匹配pattern1前提的行上进行替换</p>
+<ul>
+<li>如果没有指定地址，那么命令将应用于每一行</li>
+<li>如果只有一个地址，那么命令应用于该地址匹配的任意行</li>
+<li>如果地址后面有感叹号，那么命令将应用于不匹配该地址的其他行</li>
+<li>如果指定了由逗号分隔的两个地址，那么命令将应用于匹配了第一个地址的第一行和它后面的指导匹配到第二个地址的行（包括此行）</li>
+</ul>
+<p>几个例子</p>
+<pre><code>- 1d
+- $d    * 删除最后一行
+- /^&amp;/d     * 删除空行
+- /^\\.TS/,/^\\.TE/d
+- 50,$d
+- 1,/^&amp;/!d
+- /---/!s/--/\\(em/g
+</code></pre><h3 id="-">范围嵌套</h3>
+<p>再指定行的范围之后，继续在这个范围里指定另一个地址来执行操作</p>
+<pre><code class="lang-sed">/^\.TS/,/^\.TE/{
+    /^&amp;/d
+}
+</code></pre>
+<p>注意：<em>左大括号必须在行末，而且右大括号本身必须单独占一行，并在之后没有空格</em></p>
+<h2 id="-">操作</h2>
+<h3 id="-">替换</h3>
+<pre><code>[address]s/pattern/replacement/flag
+</code></pre><table>
+<thead>
+<tr>
+<th>replacement中的特殊符号</th>
+<th>&lt;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;</td>
+<td>pattern匹配到所有的内容</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>pattern中的第n个分组所匹配到的内容</td>
+</tr>
+<tr>
+<td>\</td>
+<td>用来转义特殊字符</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>flag</th>
+<th>&lt;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n</td>
+<td>表示对文本的模式第n次匹配成功的情况进行替换，n可以是1到512</td>
+</tr>
+<tr>
+<td>g</td>
+<td>对模式空间所有出现的情况进行全局更改，不加则只是对第一次匹配进行替换</td>
+</tr>
+<tr>
+<td>p</td>
+<td>打印模式空间的内容</td>
+</tr>
+<tr>
+<td>w file</td>
+<td>将模式空间的内容写到文件file中</td>
+</tr>
+</tbody>
+</table>
+<p>有趣的例子：将该行中的第二个空格替换成换行符</p>
+<pre><code class="lang-sed">    s/ /\
+    /2
+</code></pre>
+<h3 id="-">追加、插入和替换</h3>
+<pre><code>[address]a\
+text
+
+[address]i\
+text
+
+[address]c\
+text
+</code></pre><p>以上操作都是以<em>行</em>为对象，并且每一个后面都跟一个反斜杠用于转义换行符，所以text必须从下一行开始</p>
+<p>如果text是多行文本，除了最后一行外每个连续的行都必须用反斜杠结束</p>
+<p>追加和插入只应用于单个行地址，不是一个范围内的行。不仅如此，这两个命令不会影响模式空间的内容，也就是说后续的匹配无法匹配到text的内容</p>
+<h3 id="-">转换操作</h3>
+<pre><code>[address]y/abc/xyz/
+</code></pre><p>类似UNIX的tr命令，也是perl中的tr或叫y函数，依靠一一对应来替换字符</p>
+<h3 id="-">打印操作</h3>
+<pre><code>[address]p
+</code></pre><p>和replace中flag的打印功能一样，一般与命令行选项<em>-n</em>或是<em>#n</em>一起使用，由于其对模式空间不会有任何影响，也可以匹配来调试sed脚本</p>
+<pre><code class="lang-sed">    /^[\[.m/{
+    p
+    s/s//gp
+    }
+</code></pre>
+<h3 id="-">打印行号</h3>
+<pre><code>[address]=
+</code></pre><p>除非抑制了行的自动输出（若有则只打印行号），否则行号和行本身都将被打印（换行分隔），<em>这个命令不能对一个范围内的行进行操作</em></p>
+<p>注意：=操作打印出来的行是模式空间的内容，如下例子，行被输出了两次，但两次内容是不一样的，即使=操作在s之前。p打印原行，=打印不带a的行</p>
+<pre><code class="lang-sed">    /^[\[.m/{
+    p
+    =
+    s/a//g
+    }
+</code></pre>
+<h3 id="-next">下一步next</h3>
+<pre><code>[address]n
+</code></pre><p>sed是将整个脚本应用于源文件中的每一行，n操作符会将当前模式空间中的行输出（如果没有-n之类的话），再把模式空间中的内容替换成下一行的内容，之后脚本文件上的操作都会下一行</p>
+<p>perl程序来演示</p>
+<pre><code>my $flag = 1;
+while my $line(&lt;&gt;) {
+    &lt;sedscript1&gt; if $flag;
+    $flag = 0;
+    n =&gt; next if 某个条件;  * 成立时，相当于替换成下一行内容，并从sed2开始
+    &lt;sedscript2&gt;
+    $flag = 1;
+}
+</code></pre><h3 id="-next">追加下一行NEXT</h3>
+<pre><code>[address]N
+</code></pre><p>多行NEXT(N)命令通过读取新的行，并将它追加到模式空间的现有内容之后（换行符分隔），来创建多行模式空间</p>
+<p>多行模式空间的换行符可以用\n来匹配，而元字符^只匹配空间中的第一个字符，同样$匹配模式空间的最后一个换行符（好奇怪，不过的确是这样）</p>
+<p>注意：如果对最后一行即$执行NEXT操作，此时没有额外的行被读取，所以sed退出，甚至没有输出这一行，所以一般推荐使用<code>$!N</code></p>
+<h3 id="-">多行删除</h3>
+<pre><code>[address]D
+</code></pre><p>这也是用于多行的操作，用于删除模式空间中直到第一个换行符的内容（会输出），然后以模式空间剩余的内容从脚本顶端重新开始</p>
+<pre><code class="lang-sed">    /^$/{
+    N
+    /^\n$/D
+    s/$/ endline/
+    }
+</code></pre>
+<h3 id="-">多行打印</h3>
+<pre><code>[address]P
+</code></pre><p>和D操作类似，只打印多行模式空间中直到第一个换行符的内容，一般出现在Next之后Delete之前</p>
+<h3 id="-">读写文件</h3>
+<pre><code>[address]r file
+[address]w file
+</code></pre><p>读命令将在匹配成功的地址之后插入file的完整内容</p>
+<p>写命令将模式空间中的内容追加到file中，每个脚本最多只能打开10个文件</p>
+<h3 id="-">退出</h3>
+<pre><code>[address]q
+</code></pre><p>sed脚本退出，剩下的内容并不会被输出，一般是用来从文件中获取想要的信息后退出脚本</p>
+<pre><code>sed -e &#39;100q&#39; test     * 用来打印前100行
+</code></pre><h3 id="-">保持空间</h3>
+<p>保持空间(hold space)是不同于模式空间的预留缓冲区，模式空间的内容可以复制到保持空间，而且保持空间的内容也可以复制到模式空间。影响保持空间的命令有</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>缩写</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hold</td>
+<td>h 或 H</td>
+<td>将模式空间的内容复制或追加到保持空间</td>
+</tr>
+<tr>
+<td>Get</td>
+<td>g 或 G</td>
+<td>将保持空间的内容复制或追加到模式空间</td>
+</tr>
+<tr>
+<td>Exchange</td>
+<td>x</td>
+<td>交换保持空间和模式空间的内容</td>
+</tr>
+</tbody>
+</table>
+<p>对于Hold和Get命令，同一个命令的大小写区别是，小写字母改写目的缓存区的内容（原来的内容并不会被输出），而大写字母命令追加缓存区的现有内容</p>
+<p>Hold命令在保持空间的内容之后放置一个换行符，且后面跟随模式空间的内容(即使内容为空），Get命令模式空间的内容之后放置一个换行符，且后面跟随保持空间的内容</p>
+<h3 id="-">分支</h3>
+<pre><code>[address]b !label
+</code></pre><p>branch命令用于在脚本中将控制转移到另一行</p>
+<p>如果没有给出label，控制将被转移到脚本的结尾处，或执行label后面的行</p>
+<p>定义<code>:label</code></p>
+<h3 id="-">测试</h3>
+<pre><code>[address]t label
+</code></pre><p>如果当前匹配地址的行上进行了成功的替换，在跳转到label处。同样的，如果没有给出label，控制将被转移到脚本的结尾处</p>
