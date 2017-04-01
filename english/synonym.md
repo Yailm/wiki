@@ -45,4 +45,9 @@ barren
 
 #### tempting
 
-enticing
+enticing attractive compelling
+
+#### destroy
+
+eradicate 
+
