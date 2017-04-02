@@ -1,37 +1,40 @@
-### 使用swig将c++项目转化成python可用的模块
+
+
+使用swig将c++项目转化成python可用的模块
+------------------------------------
 
 1. 编写swig interface文件，包含需要导出的类和函数
 
-    /* example.i */
-    %module example
-    %{
-    #include "example.h"
-    %}
-    %include "example.h"
-    /*
-     * 假设你需要的是example.cpp文件中的类和方法
-     * 而它正好有example.h文件，就能把接口文件直接这样写
-     */
+        /* example.i */
+        %module example
+        %{
+        #include "example.h"
+        %}
+        %include "example.h"
+        /*
+         * 假设你需要的是example.cpp文件中的类和方法
+         * 而它正好有example.h文件，就能把接口文件直接这样写
+         */
 
 2. 执行`swig -c++ -python example.i`，这会生成两个文件**example.py**和**example_wrap.cxx**
 
 3. 将工程下**所有相关**的cpp或cxx文件都编译了
 
-    g++ -O2 -fPIC -c *.cpp
-    # 对于特殊的example_wrap.cxx文件
-    g++ -O2 -fPIC -c example_wrap.cxx -I/usr/include/python3.5m
+        g++ -O2 -fPIC -c *.cpp
+        # 对于特殊的example_wrap.cxx文件
+        g++ -O2 -fPIC -c example_wrap.cxx -I/usr/include/python3.5m
 
 4. 添加上一部生成的所有.o文件，生成动态连接库，还需要加上依赖
 
-    g++ -shared *.o exmaple.o example_wrap.o -o _example.so
+        g++ -shared *.o exmaple.o example_wrap.o -o _example.so
 
 5. example.py就是我们最后的模块，它会自动调用_example.so动态库（名字是有关系的）
 
-    import example  # 没有错误就大功告成
+        import example  # 没有错误就大功告成
 
 #### 从python中传递list到c的array
 
-- 最后不要使用`%include "carrays.i"生成的对象，速度太慢
+- 最后不要使用`%include "carrays.i"`生成的对象，速度太慢
 - 不推荐使用复杂的typemap函数
 - 使用numpy项目提供的[numpy.i](https://raw.githubusercontent.com/numpy/numpy/master/tools/swig/numpy.i)，对普通的list也能使用
 

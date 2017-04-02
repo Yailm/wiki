@@ -1,4 +1,7 @@
 
+fish-shell
+------------------------------------
+
 #### IO redirection
 
 - to write standard error to a file, write `^DESTINATION`

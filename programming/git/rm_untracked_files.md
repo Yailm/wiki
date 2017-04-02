@@ -1,3 +1,7 @@
+
+rm untracked files
+------------------------------------
+
 - show what will be deleted by using -n option: (--dry-run)
 
       git clean -f -n

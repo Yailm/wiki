@@ -1,4 +1,8 @@
-#### Client (send)
+
+通过socket传输图片
+------------------------------------
+
+### Client (send)
 ```python
     import cv2
     import socket
@@ -13,7 +17,7 @@
         ...
 ```
 
-#### Server (receive)
+### Server (receive)
 ```python
     import socket
     import pickle

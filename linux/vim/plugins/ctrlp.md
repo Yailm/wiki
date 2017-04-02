@@ -1,4 +1,6 @@
-### CtrlP
+
+Ctrlp
+------------------------------------
 
 * `<c-p>` open the CtrlP prompt in find file mode.  
   * `<c-d>` toggle between full-path search and filename only search
