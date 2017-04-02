@@ -14,85 +14,40 @@ Subterfuge主要调用的是sslstrip，sslstrip 是08
 
 ### 使用环境：
 
-> 攻击机：Kali2016   ip：192.168.248.145
+> 攻击机：archlinux   ip：192.168.248.145
 >
 > 目标主机：windows 7  ip：192.168.248.148
 
 实验步骤：
 ----------
 
-把subterfuge复制到攻击机 
-
-![1.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![1.png](http://image.3001.net/images/20170327/14905916847515.png!small)
-使用解压 
-
-    tar zxvf SubterfugePublicBeta5.0.tar.gz 
-
-![2.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![2.png](http://image.3001.net/images/20170327/14905917968085.png!small)
-进入压缩包查看文件
-
-![3.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![3.png](http://image.3001.net/images/20170327/1490591881457.png!small)
-查看说明文件
-
-![4.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![4.png](http://image.3001.net/images/20170327/14905919143503.png!small)
-提示使用 python install.py –i进行安装
-
-![5.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![5.png](http://image.3001.net/images/20170327/14905919626803.png!small)
 ### 使用
 
-python installer\_old.py –i  命令行安装
+直接使用blackarch的源安装subterfuge
 
-python install.py –i 图形界面安装（出现命名失败，是因为我安装过一次）
+    pacaur -S subterfuge
 
-![7.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
+还需要同时安装python2-django，但是还不能兼容最新的版本，要安装旧版
 
-![7.png](http://image.3001.net/images/20170327/14905920801371.png!small)
-安装完成后进去subterfuge默认安装目录 /usr/share/subterfuge使用
+    sudo pip2 install django=="1.5"
 
-    ./sslstrip.py –h
-
-### 进行测试
-
-![8.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![8.png](http://image.3001.net/images/20170327/14905921439469.png!small)
 开启网卡转发
 
     echo “1” >/proc/sys/net/ipv4/ip_forword
 
-![9.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![9.png](http://image.3001.net/images/20170327/14905921797613.png!small)
 使用iptables把80端口的数据转发到1234端口，方便sslstrip进行监听 
 
-![10.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
+    iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 1234
 
-![10.png](http://image.3001.net/images/20170327/14905922115326.png!small)
 ### 启用sslstrip进行
 
 -a 记录所有来这SSL和HTTP的数据
 
 -l 1234 监听来自1234端口的数据与之前设置的iptables端口号一样
 
-![11.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
+    ./sslstrip.py -a -l 1234
 
-![11.png](http://image.3001.net/images/20170327/14905922446371.png!small)
-已成功启动sslstrip进行监听，现在启动kali自带的tcpdump进行嗅探并捕获转发的报文
-
-![12.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![12.png](http://image.3001.net/images/20170327/14905922722787.png!small)
-目标机的ip地址
+已成功启动sslstrip进行监听，现在启动tcpdump进行嗅探并捕获转发的报文
 
 在攻击机上执行   
 
@@ -101,32 +56,5 @@ python install.py –i 图形界面安装（出现命名失败，是因为我安
 -A 开启ASCALL模式，把捕获的数据已ACSALL模式显示
 
 -i 选择监听的网卡
-
-在目标机上登陆https：//xxx.comtcp 抓取所有的tcp协议的数据包
-
-src 192.168.248.148 and port 80 抓取源地址和端口号的数据
-
-![13.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![13.png](http://image.3001.net/images/20170327/14905923261368.png!small)
-![14.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![14.png](http://image.3001.net/images/20170327/1490592326668.png!small)
-在目标机上登陆https：//xxx.com
-
-![15.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![15.png](http://image.3001.net/images/20170327/1490592367400.png!small)
-![16.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![16.png](http://image.3001.net/images/20170327/14905923673068.png!small)
-能捕获163的用户名和Cookie等信息，而目标无任何安全提示
-
-![17.png](http://www.freebuf.com/buf/themes/freebuf/images/grey.gif)
-
-![17.png](http://image.3001.net/images/20170327/14905924229029.png!small)
-> 墙外下载地址：<https://code.google.com/archive/p/subterfuge/downloads>
->
-> 百度云链接：<http://pan.baidu.com/s/1sl6PWSH> 密码：t831
 
 > 原文地址: <http://www.freebuf.com/sectool/130456.html>
