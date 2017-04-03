@@ -52,5 +52,24 @@ enticing attractive compelling
 
 #### destroy
 
-eradicate 
+eradicate bungle wrack
 
+#### weakness
+
+flaw defect
+
+#### crowed
+
+abuzz teemed
+
+#### careless
+
+unwary incautious
+
+#### worse
+
+deteriorate
+
+#### hurry
+
+scamper
