@@ -4,7 +4,7 @@ english synonym
 
 #### happy
 
-rejoiced
+rejoiced blissful
 
 #### hug
 
@@ -12,7 +12,7 @@ gigantic colossal immense tremendous
 
 #### lonely
 
-solitary desolate
+solitary desolate barren solitude
 
 #### hate
 
@@ -42,10 +42,6 @@ shrewd astute sharp smart
 
 reproach disgrace
 
-#### desolate
-
-barren
-
 #### tempting
 
 enticing attractive compelling
@@ -73,3 +69,27 @@ deteriorate
 #### hurry
 
 scamper
+
+#### upset
+
+distraught
+
+#### crazy
+
+demented
+
+#### sad
+
+melancholic
+
+#### slight
+
+skinny slender
+
+#### disgusting
+
+revolting
+
+#### dirty
+
+fithy foul
