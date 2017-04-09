@@ -4,13 +4,13 @@ copy/paste in urxvt
 
 add following lines into `$HOME/.Xresource`
 
-    URxvt.perl-ext-common: default,clipboard
-    urxvt.keysym.M-c:   perl:clipboard:copy
-    urxvt.keysym.C-v:   perl:clipboard:paste
-    urxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+    URxvt.perl-ext-common: default,keyboard-select,clipboard
+    URxvt.keysym.M-Escape: perl:keyboard-select:activate
+    URxvt.keysym.M-s: perl:keyboard-select:search
+    URxvt.keysym.M-c: perl:clipboard:copy
 
 then install `urxvt-perls`
 
     $ pacaur -S urxvt-perls
 
-enjoy urxvt with `alt-c` and `ctrl-v`
+enjoy urxvt with `alt-c` `alt-v` and `alt-escape`
