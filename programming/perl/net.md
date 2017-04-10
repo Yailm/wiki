@@ -1,31 +1,14 @@
-* [网络](#网络)
-    * [socket](#socket)
-    * [bind](#bind)
-    * [listen](#listen)
-    * [accept](#accept)
-    * [connect](#connect)
-    * [shutdown](#shutdown)
 
-## 网络
+网络
+------------------------------------
+
+### 流程
 
     服务端
     socket->bind->listen->accept->read/print->shutdown->close
 
     客户端
     socket--------------->connect->read/print->shutdown->close
-
-        socket  服
-          |     务
-         bind   端
-          |
-        listen                          socket   客
-          |                               |      户
-        accept        connect           connect  端
-          | <---------------------------> |
-      read/print <------------------> read/print
-          |          data transfer        |
-       shutdown                        shutdown
-        close                           close
 
 ### socket
 

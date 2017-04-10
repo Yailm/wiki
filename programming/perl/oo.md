@@ -1,15 +1,6 @@
-* [面向对象](#面向对象)
-    * [类的实例化](#类的实例化)
-    * [继承](#继承)
-    * [UNIVERSAL](#universal)
-    * [AUTOLOAD](#autoload)
-    * [DESTROY](#destroy)
-    * [import](#import)
-    	* [标签分组](#标签分组)
-    * [caller](#caller)
-    * [Moose](#moose)
 
-## 面向对象
+面向对象
+------------------------------------
 
 类->方法就是包调用method子程序，在perl里面子程序和方法是没有区别的。
 ```perl
@@ -111,7 +102,7 @@ use parent --norequire, 'Foo', 'bar';
 # 如果在v5.101以上，可以用base取代
 use base 'Foo', 'bar';
 ```
-base和parent的[区别](http://stackoverflow.com/questions/876471/what-is-the-difference-between-parent-and-base-in-perl-5)
+> base和parent的[区别](http://stackoverflow.com/questions/876471/what-is-the-difference-between-parent-and-base-in-perl-5)
 
 重载时使用$class->SUPER::speak;调用父类的原方法
 ```perl

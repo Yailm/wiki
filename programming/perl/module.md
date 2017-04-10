@@ -1,24 +1,6 @@
-* [模块](#模块)
-    * [查找模块](#查找模块)
-        * [内部设置](#内部设置)
-        * [外部设置](#外部设置)
-    * [使用模块](#使用模块)
-    * [制作模块](#制作模块)
-        * [Module::Starter](#module::starter)
-    * [编译模块](#编译模块)
-    * [模块测试](#模块测试)
-        * [跳过测试](#跳过测试)
-        * [面向对象测试](#面向对象测试)
-        * [测试分组](#测试分组)
-        * [其他模块](#其他模块)
-            * [Test::Output](#test::output)
-            * [Test::Warn](#test::warn)
-            * [Test::MockObject](#test::mockobject)
-            * [Test::Buider](#test::buider)
-        * [Build](#build)
-    * [编写文档](#编写文档)
 
-## 模块
+模块编写
+------------------------------------
 
 ### 查找模块
 
@@ -118,11 +100,11 @@ Module::Starter::Plugin帮助我们创建插件
 
 ### 编译模块
 
-perl Build.PL
-./Build
-./Build test
-./Build disttest
-./Build dist    # 最终获得一个tar.gz包
+    perl Build.PL
+    ./Build
+    ./Build test
+    ./Build disttest
+    ./Build dist    # 最终获得一个tar.gz包
 
 ### 模块测试
 

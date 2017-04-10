@@ -1,12 +1,8 @@
-* [DBI](#dbi)
-    * [执行SQL语句](#执行sql语句)
-        * [处理引号](#处理引号)
-        * [占位符](#占位符)
-    * [错误信息](#错误信息)
-    * [绑定列](#绑定列)
-    * [数据库事务](#数据库事务)
 
-## DBI
+DBI
+------------------------------------
+
+### 连接数据库
 ```perl
 my $dbh = DBI->connect("DBI:mysql:perl", 'root', '') or die "Connection to perl failed; $DBI:errstr";
 my $sth = $dbh->prepare("select * from coaches");

@@ -1,33 +1,6 @@
-* [输入输出](#输入输出)
-    * [钻石操作符](#钻石操作符)
-        * [chomp](#chomp)
-    * [文件IO](#文件io)
-        * [文件测试](#文件测试)
-            * [stat](#stat)
-        * [open](#open)
-        * [binmode](#binmode)
-        * [read](#read)
-        * [getc](#getc)
-        * [flock](#flock)
-        * [seek](#seek)
-        * [tell](#tell)
-    * [基本输出](#基本输出)
-        * [print](#print)
-            * [HERE文档](#here文档)
-        * [printf](#printf)
-            * [动态产生字符串](#动态产生字符串)
-    * [目录句柄](#目录句柄)
-    * [DBM数据库](#dbm数据库)
-    * [相关的模块](#相关的模块)
-        * [IO::Handle](#io::handle)
-        * [IO::File](#io::file)
-        * [IO::Tee](#io::tee)
-        * [IO::Pipe](#io::pipe)
-        * [IO::Null](#io::null)
-        * [IO::Interactive](#io::interactive)
-        * [IO::Dir](#io::dir)
 
-## 输入输出
+输入输出
+------------------------------------
 
 ### 钻石操作符
 

@@ -72,7 +72,7 @@ scamper
 
 #### upset
 
-distraught
+distraught agitate
 
 #### crazy
 
@@ -93,3 +93,7 @@ revolting
 #### dirty
 
 fithy foul
+
+#### essential
+
+crucial
