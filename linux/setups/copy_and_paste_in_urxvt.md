@@ -14,3 +14,5 @@ then install `urxvt-perls`
     $ pacaur -S urxvt-perls
 
 enjoy urxvt with `alt-c` `alt-v` and `alt-escape`
+
+but it will be more complicated with using `urxvtc`
