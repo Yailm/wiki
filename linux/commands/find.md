@@ -20,7 +20,8 @@ find
 
 ### 命令选项
 
-* -name 按照文件名
+* -name 按照文件名(不包括目录名)
+* -path 按照路径
 * -perm 按照文件权限
 * -prune 使用这选项可以使find命令不在当前指定的目录下查找，如果同时使用-depth选项，那么-prune将被忽略
 * -user 按照文件属主
@@ -48,7 +49,7 @@ find
 * -ctime n
 * -mmin n 被改变文件数据的文件
 * -mtime n
-* -regex 使用正则表达式
+* -regex 使用正则表达式，匹配路径
 * -iregex 忽略大小写的正则
 * -maxdepth n 指定搜索的最大深度
 
@@ -75,6 +76,7 @@ find
 > 按大小查找文件
 
       find . -size +1000c -print
+      find . -type f -size -2k
 
 > 查找txt和pdf文件
 
@@ -88,6 +90,10 @@ find
 > 指定搜索的深度，打印当前目录的文件
 
       find . -maxdepth 1 -type f
+
+> 比file.txt修改时间更近的所有文件
+
+      find . -type f -newer file.txt -print
 
 ### exec
 

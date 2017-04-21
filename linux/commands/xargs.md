@@ -66,3 +66,22 @@ xargs
   ```
 * [-x] exit的意思，主要配合-s使用
 * [-P] 最多同时运行的进程数，默认是1，如果设置成0，xargs将同时运行尽可能多的进程
+
+### 使用实例
+
+> 多行输出转换成单行输出
+
+      cat example.txt | xargs
+
+> 单行输出转换成多行输出
+
+      cat example.txt | xargs -n 3
+
+> 删除.txt文件
+
+      find . -type f -name "*.txt" -print0 | xargs -0 rm -f
+      # 对比下面有风险的做法
+      find . -type f -name "*.txt" -print | xargs rm -f
+
+  因为文件名中可能包含空格，和xargs的定界符是相同的，导致误删了一些文件
+  -print0让'\0'来分隔文件名，-0则将'\0'当成定界符
