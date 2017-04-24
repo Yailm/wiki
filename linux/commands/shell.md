@@ -210,3 +210,9 @@ shell
         VAR=hack.fun.book.txt
         echo ${VAR#*.}      # fun.book.txt
         echo ${VAR##*.}     # txt
+
+- diff
+
+        diff -u file1 file2 [> file1.patch]
+        patch -p1 file1 < file1.patch
+        diff -Naur dir1 dir2
