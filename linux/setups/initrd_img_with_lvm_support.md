@@ -18,7 +18,7 @@ It shows that root is on the lvm volume which makes booting failed and dropping 
 
 1. bring up the volume group (if `-a y` does not work try `-a yes`)
 
-        vgchang -a y
+        vgchange -a y
 
 2. get the root LV, /boot, and /dev mounted under the seperated tree
 
@@ -30,7 +30,7 @@ It shows that root is on the lvm volume which makes booting failed and dropping 
 3. copy the needed packages into /newroot tree (ubuntu)
 
         apt-get install --reinstall lvm2    # make sure you have lvm2.deb
-        cp /var/cache/apt/archives/*.deb /new/tmp/
+        cp /var/cache/apt/archives/*.deb /newroot/tmp/
 
 4. chroot the new tree
 
