@@ -30,13 +30,13 @@ It shows that root is on the lvm volume which makes booting failed and dropping 
 3. copy the needed packages into /newroot tree (ubuntu)
 
         apt-get install --reinstall lvm2    # make sure you have lvm2.deb
-        cp /var/cache/apt/archives/*.deb /newroot/tmp/
+        cp /var/cache/apt/archives/lvm2[TAB] /newroot/tmp/
 
 4. chroot the new tree
 
         chroot /newroot
         cd /tmp
-        dpkg -i *.deb
+        dpkg -i lvm2[TAB]
 
 5. make sure kernel that you need is regenerated
 
